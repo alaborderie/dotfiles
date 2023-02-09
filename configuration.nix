@@ -31,6 +31,9 @@
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Enable exp feature
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
   # Set your time zone.
   time.timeZone = "Europe/Paris";
 
@@ -118,6 +121,10 @@
     fzf
     alacritty
     cider
+    discord
+    lutris
+    slack
+    pavucontrol
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
