@@ -116,6 +116,8 @@
     unrar
     usbutils
     fzf
+    alacritty
+    cider
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -144,10 +146,6 @@
       };
     };
   };
-  # programs.alacritty = {
-  #   enable = true;
-  #   #settings = {
-  # };
 
   # Docker configuration
   virtualisation.docker.enable = true;
