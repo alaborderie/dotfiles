@@ -127,6 +127,7 @@
   # };
 
   programs.fish.enable = true;
+  programs.thefuck.enable = true;
   programs.steam.enable = true;
   programs.neovim = {
     enable = true;
