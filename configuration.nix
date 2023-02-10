@@ -71,6 +71,10 @@
   # Enable fingerprint support
   services.fprintd.enable = true;
 
+  # Enable bluetooth support
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
@@ -125,6 +129,10 @@
     lutris
     slack
     pavucontrol
+    nodejs
+    rustc
+    cargo
+    libsForQt5.bismuth
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -138,6 +146,7 @@
   programs.fish.enable = true;
   programs.thefuck.enable = true;
   programs.steam.enable = true;
+  programs.gamemode.enable = true;
   programs.neovim = {
     enable = true;
     defaultEditor = true;
@@ -148,6 +157,7 @@
       packages.myVimPackage = with pkgs.vimPlugins; {
       start = [
 	      vim-nix
+        vim-plug
       ];
       opt = [];
       };
