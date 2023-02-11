@@ -115,6 +115,8 @@
     curl
     git
     gcc
+    python3
+    python2
     ripgrep
     docker-compose
     vlc
@@ -133,6 +135,9 @@
     rustc
     cargo
     libsForQt5.bismuth
+    fd
+    xclip
+    xsel
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -173,6 +178,10 @@
 
   # Fonts configuration
   fonts.fonts = with pkgs; [
+    inter
+    roboto
+    source-sans-pro
+    raleway
     (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" ]; })
   ];
 

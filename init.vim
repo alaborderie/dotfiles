@@ -32,7 +32,6 @@ call plug#begin("~/.vim/plugged")
   Plug 'tpope/vim-fugitive'
   Plug 'romgrk/barbar.nvim'
   Plug 'itchyny/lightline.vim'
-  Plug 'APZelos/blamer.nvim'
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
   Plug 'wakatime/vim-wakatime'
 call plug#end()
@@ -44,9 +43,6 @@ syntax enable
 
 " Comments
 lua require('Comment').setup()
-
-" Git blame
-let g:blamer_enabled = 1
 
 " Material Theme
 let g:material_theme_style = 'darker'
