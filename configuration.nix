@@ -75,10 +75,16 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # Enable Valve Index support
+  hardware.steam-hardware.enable = true;
+  hardware.opengl.driSupport32Bit = true;
+  hardware.pulseaudio.support32Bit = true;
+
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
+  security.polkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -139,6 +145,8 @@
     xclip
     xsel
     openvpn
+    steam
+    steam-run
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
