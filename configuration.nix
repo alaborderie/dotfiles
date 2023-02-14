@@ -147,6 +147,10 @@
     openvpn
     steam
     steam-run
+    openssl
+    obs-studio
+    mangohud
+    easyeffects
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -157,6 +161,7 @@
   #   enableSSHSupport = true;
   # };
 
+  programs.dconf.enable = true;
   programs.fish.enable = true;
   programs.thefuck.enable = true;
   programs.steam.enable = true;
