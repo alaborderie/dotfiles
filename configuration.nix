@@ -136,7 +136,6 @@
     discord
     lutris
     slack
-    pavucontrol
     nodejs
     rustc
     cargo
@@ -151,6 +150,8 @@
     obs-studio
     mangohud
     easyeffects
+    ffmpeg
+    ulauncher
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
