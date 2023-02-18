@@ -55,6 +55,10 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
 
+  # Enable wayland
+  programs.sway.enable = true;
+  xdg.portal.wlr.enable = true;
+
   # Enable the KDE Plasma Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
   services.xserver.desktopManager.plasma5.enable = true;
@@ -79,6 +83,11 @@
   hardware.steam-hardware.enable = true;
   hardware.opengl.driSupport32Bit = true;
   hardware.pulseaudio.support32Bit = true;
+
+  # Enable OpenCL with my GPU
+  hardware.opengl.extraPackages = with pkgs; [
+    rocm-opencl-icd
+  ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -148,6 +157,7 @@
     openssl
     obs-studio
     mangohud
+    goverlay
     easyeffects
     ffmpeg
     dbeaver
