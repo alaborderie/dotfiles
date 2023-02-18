@@ -137,8 +137,7 @@
     lutris
     slack
     nodejs
-    rustc
-    cargo
+    rustup
     libsForQt5.bismuth
     fd
     xclip
@@ -151,7 +150,9 @@
     mangohud
     easyeffects
     ffmpeg
-    ulauncher
+    dbeaver
+    glxinfo
+    vulkan-tools
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
