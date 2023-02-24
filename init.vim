@@ -152,6 +152,8 @@ set smartindent
 
 set number
 
+set shell=/bin/bash
+
 " lua scripts
 
 " open nvim-tree on startup
