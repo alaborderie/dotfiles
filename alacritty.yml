@@ -172,8 +172,154 @@ font:
   # it is recommended to set `use_thin_strokes` to `false`.
   #use_thin_strokes: true
 # If `true`, bold text is drawn using the bright color variants.
-#draw_bold_text_with_bright_colors: false
+draw_bold_text_with_bright_colors: true
 
+# Schemes
+schemes:
+  kimbie: &kimbie
+    transparent_background_colors: false
+    primary:
+      background: "#221a02"
+      foreground: "#c2a383"
+      bright_foreground: "#f06431"
+      # dim_foreground: '#9a9a9a'
+
+    # Cursor colors
+    #
+    # Colors which should be used to draw the terminal cursor. If these are unset,
+    # the cursor color will be the inverse of the cell color.
+    cursor:
+      text: "#221a02"
+      cursor: "#f79a32"
+      # cursor: '#c2a383'
+      # text: CellBackground
+      # cursor: CellForeground
+
+    vi_mode_cursor:
+      text: CellBackground
+      cursor: CellForeground
+
+    # Selection colors
+    #
+    # Colors which should be used to draw the selection area. If selection
+    # background is unset, selection color will be the inverse of the cell colors.
+    # If only text is unset the cell text color will remain the same.
+    selection:
+      text: "#221a02"
+      background: "#889b4a"
+      # background: '#c2a383'
+
+    # search:
+    #   matches:
+    #     foreground:
+    #     background:
+    #   focused_match:
+    #     foreground:
+    #     background:
+    #   bar:
+    #     foreground:
+    #     background:
+
+    # line_indicator:
+    #     foreground:
+    #     background:
+
+    hints:
+      start:
+        foreground: "#201f1f"
+        background: "#f79a32"
+      end:
+        foreground: "#201f1f"
+        background: "#f79a32"
+
+    # Line indicator
+    #
+    # Color used for the indicator displaying the position in history during
+    # search and vi mode.
+    #
+    # By default, these will use the opposing primary color.
+    # line_indicator:
+    # foreground: '#dc3958'
+    # background: None
+
+    # Footer bar
+    #
+    # Color used for the footer bar on the bottom, used by search regex input,
+    # hyperlink URI preview, etc.
+    #
+    footer_bar:
+      background: "#c5c8c6"
+      foreground: "#1d1f21"
+
+    normal:
+      black: "#201F1F"
+      red: "#DC3958"
+      green: "#819C3B"
+      yellow: "#F79A32"
+      blue: "#924F79"
+      magenta: "#7E5053"
+      cyan: "#088649"
+      white: "#A89983"
+    bright:
+      black: "#676767"
+      red: "#F14A68"
+      green: "#A3B95A"
+      yellow: "#F79A32"
+      blue: "#DC3958"
+      magenta: "#FE8019"
+      cyan: "#4C96A8"
+      white: "#51412C"
+    dim:
+      black: "#676F78"
+      red: "#DC3958"
+      green: "#088649"
+      yellow: "#F79A32"
+      blue: "#733E8B"
+      magenta: "#7E5053"
+      cyan: "#088649"
+      white: "#A89983"
+
+    indexed_colors:
+      - { index: 16, color: "#FFA066" }
+      - { index: 17, color: "#FF5D62" }
+      - { index: 18, color: "#89B482" }
+      - { index: 19, color: "#D3869B" }
+      - { index: 20, color: "#719190" }
+      - { index: 21, color: "#957FB8" }
+      - { index: 22, color: "#938AA9" }
+      - { index: 23, color: "#EA6962" }
+      - { index: 24, color: "#E46876" }
+      - { index: 25, color: "#418292" }
+      - { index: 26, color: "#2AB074" }
+      - { index: 27, color: "#CC6666" }
+      - { index: 28, color: "#77A172" }
+      - { index: 29, color: "#83A598" }
+      - { index: 30, color: "#7E9CD8" }
+      - { index: 31, color: "#BD798B" }
+      - { index: 32, color: "#E78A4E" }
+      - { index: 33, color: "#7E602C" }
+      - { index: 34, color: "#A89984" }
+      - { index: 35, color: "#625A5A" }
+      - { index: 36, color: "#39260E" }
+      - { index: 37, color: "#362712" }
+      - { index: 38, color: "#291804" }
+      - { index: 39, color: "#5E452B" }
+      - { index: 40, color: "#E8C097" }
+      - { index: 41, color: "#665C54" }
+      - { index: 42, color: "#D9AE80" }
+      - { index: 43, color: "#7DAEA3" }
+      - { index: 44, color: "#F79A32" }
+      - { index: 45, color: "#F06431" }
+      - { index: 46, color: "#C2A383" }
+      - { index: 47, color: "#A25BC4" }
+      - { index: 48, color: "#FF5813" }
+      - { index: 49, color: "#A83232" }
+      - { index: 50, color: "#989719" }
+      - { index: 51, color: "#98676A" }
+      - { index: 52, color: "#A06469" }
+      - { index: 53, color: "#A3B95A" }
+
+colors: *kimbie
 # Colors (Tomorrow Night)
 #colors:
 # Default colors
