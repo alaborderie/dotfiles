@@ -156,6 +156,11 @@
     steam-run
     openssl
     obs-studio
+    (pkgs.wrapOBS {
+      plugins = with pkgs.obs-studio-plugins; [
+        input-overlay
+      ];
+    })
     mangohud
     goverlay
     easyeffects

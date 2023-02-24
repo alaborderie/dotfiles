@@ -10,13 +10,13 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 \| endif
 
 call plug#begin("~/.vim/plugged")
-  Plug 'kaicataldo/material.vim', { 'branch': 'main' }
+  Plug 'lmburns/kimbox'
   Plug 'neovim/nvim-lspconfig'
-  Plug 'scrooloose/nerdtree'
-  Plug 'ryanoasis/vim-devicons'
-  Plug 'kyazdani42/nvim-web-devicons'
+  Plug 'nvim-tree/nvim-web-devicons'
+  Plug 'nvim-tree/nvim-tree.lua'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'mfussenegger/nvim-dap'
+  Plug 'rcarriga/nvim-dap-ui'
   Plug 'numToStr/Comment.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
   Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
@@ -31,45 +31,36 @@ call plug#begin("~/.vim/plugged")
   Plug 'simrat39/rust-tools.nvim'
   Plug 'tpope/vim-fugitive'
   Plug 'romgrk/barbar.nvim'
-  Plug 'itchyny/lightline.vim'
+  Plug 'famiu/bufdelete.nvim'
+  Plug 'nvim-lualine/lualine.nvim'
+  Plug 'tveskag/nvim-blame-line'
   Plug 'mg979/vim-visual-multi', {'branch': 'master'}
   Plug 'wakatime/vim-wakatime'
 call plug#end()
+
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
 
 if (has ("termguicolors"))
 	set termguicolors
 endif
 syntax enable
 
+colorscheme kimbox
+
 " Comments
 lua require('Comment').setup()
 
-" Material Theme
-let g:material_theme_style = 'darker'
-let g:material_terminal_italics = 1
-colorscheme material
-" Lightline
-let g:lightline = {
-       \ 'colorscheme': 'material',
-       \ 'active': {
-       \   'left': [ [ 'mode', 'paste' ],
-       \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-       \ },
-       \ 'component_function': {
-       \   'gitbranch': 'FugitiveHead'
-       \ },
-   \ }
+" lualine
+lua require('lualine').setup()
+
 
 " File Explorer
-let g:NERDTreeShowHidden = 1
-let g:NERDTreeMinimalUI = 1
-let g:NERDTreeIgnore = []
-let g:NERDTreeStatusline = ''
-let g:NERDTreeWinSize = 45
-" Automaticaly close nvim if NERDTree is only thing left open
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+lua require('nvim-tree').setup()
 " Toggle
-nnoremap <silent> <C-b> :NERDTreeToggle<CR>
+nnoremap <silent> <C-b> :NvimTreeFocus<CR>
+" Find File
+nnoremap <silent> <A-b> :NvimTreeFindFile<CR>
 " End File Explorer
 
 " Find files using Telescope command-line sugar.
@@ -153,38 +144,6 @@ command! -nargs=0 Format :call CocActionAsync('format')
 " Add `:OR` command for organize imports of the current buffer.
 command! -nargs=0 OR :call CocActionAsync('runCommand', 'editor.action.organizeImport')
 
-" start terminal in insert mode
-au BufEnter * if &buftype == 'terminal' | :startinsert | endif
-
-" uses zsh instead of bash
-function! OpenTerminal()
-  split term://zsh
-  resize 20
-endfunction
-" nnoremap <c-n> :call OpenTerminal()<CR>
-
-" returns true iff is NERDTree open/active
-function! IsNTOpen()        
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" Check if NERDTree is open or active
-function! IsNERDTreeOpen()
-  return exists("t:NERDTreeBufName") && (bufwinnr(t:NERDTreeBufName) != -1)
-endfunction
-
-" Call NERDTreeFind iff NERDTree is active, current window contains a modifiable
-" file, and we're not in vimdiff
-function! SyncTree()
-  if &modifiable && IsNERDTreeOpen() && strlen(expand('%')) > 0 && !&diff
-    NERDTreeFind
-    wincmd p
-  endif
-endfunction
-
-" Highlight currently open buffer in NERDTree
-autocmd BufRead * call SyncTree()
-
 " indent settings
 set tabstop=2
 set shiftwidth=2
@@ -192,4 +151,29 @@ set expandtab
 set smartindent
 
 set number
+
+" lua scripts
+
+" open nvim-tree on startup
+lua <<EOF
+  local function open_nvim_tree(data)
+
+    -- buffer is a directory
+    local directory = vim.fn.isdirectory(data.file) == 1
+
+    if not directory then
+      return
+    end
+
+    -- change to the directory
+    vim.cmd.cd(data.file)
+
+    -- open the tree
+    require("nvim-tree.api").tree.open()
+  end
+
+  vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+EOF
+
+" end lua scripts
 
