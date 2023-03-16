@@ -57,7 +57,16 @@
 
   # Enable wayland
   programs.sway.enable = true;
-  xdg.portal.wlr.enable = true;
+  xdg = {
+    portal = {
+      enable = true;
+      extraPortals = with pkgs; [
+        xdg-desktop-portal-wlr
+        xdg-desktop-portal-gtk
+      ];
+      gtkUsePortal = true;
+    };
+  };
 
   # Enable the KDE Plasma Desktop Environment.
   services.xserver.displayManager.sddm.enable = true;
@@ -117,7 +126,6 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     shell = pkgs.fish;
     packages = with pkgs; [
-      firefox
       thunderbird
       starship
     ];
@@ -126,6 +134,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
+    firefox-wayland
+    pulseaudio #for pactl
     wget
     curl
     git
@@ -149,6 +159,7 @@
     rustup
     libsForQt5.bismuth
     fd
+    wl-clipboard
     xclip
     xsel
     openvpn
@@ -169,6 +180,11 @@
     glxinfo
     vulkan-tools
   ];
+
+  # sessionVariables
+  environment.sessionVariables = {
+    MOZ_ENABLE_WAYLAND = "1";
+  };
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
