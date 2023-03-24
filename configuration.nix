@@ -28,6 +28,12 @@
   # Enable networking
   networking.networkmanager.enable = true;
 
+  # /etc/hosts
+  networking.extraHosts =
+    ''
+      127.0.0.1 d187dhp05dawk0.cloudfront.net
+    '';
+
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -180,6 +186,14 @@
     glxinfo
     vulkan-tools
   ];
+
+  # NodeJS setcap
+  security.wrappers.node = {
+    source = "${pkgs.nodejs}/bin/node";
+    capabilities = "cap_net_bind_service=+ep";
+    owner = "root";
+    group = "root";
+  };
 
   # sessionVariables
   environment.sessionVariables = {
