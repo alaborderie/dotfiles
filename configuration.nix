@@ -31,7 +31,7 @@
   # /etc/hosts
   networking.extraHosts =
     ''
-      127.0.0.1 d187dhp05dawk0.cloudfront.net
+      # 127.0.0.1 d187dhp05dawk0.cloudfront.net
     '';
 
   # Enable unfree packages
@@ -185,6 +185,12 @@
     dbeaver
     glxinfo
     vulkan-tools
+    _1password-gui
+    corectrl
+    gnumake
+    wine64
+    winetricks
+    samba
   ];
 
   # NodeJS setcap

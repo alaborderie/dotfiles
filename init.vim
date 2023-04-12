@@ -102,6 +102,10 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
+nmap <leader> e <Plug>(coc-diagnostic-next-error)
+nmap <leader> E <Plug>(coc-diagnostic-prev-error)
+nmap <leader> w <Plug>(coc-diagnostic-next)
+nmap <leader> W <Plug>(coc-diagnostic-prev)
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
