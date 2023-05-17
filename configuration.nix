@@ -34,6 +34,9 @@
       # 127.0.0.1 d187dhp05dawk0.cloudfront.net
     '';
 
+  # /etc/resolv.conf
+  networking.nameservers = [ "80.67.169.40" "2001:910:800:40" "80.67.169.12" "2001:910:800:12" ];
+
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -188,6 +191,7 @@
     _1password-gui
     corectrl
     gnumake
+    wine
     wine64
     winetricks
     samba
