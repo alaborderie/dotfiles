@@ -35,7 +35,10 @@
     '';
 
   # /etc/resolv.conf
-  networking.nameservers = [ "80.67.169.40" "2001:910:800:40" "80.67.169.12" "2001:910:800:12" ];
+  # When not home:
+  # networking.nameservers = [ "80.67.169.40" "2001:910:800:40" "80.67.169.12" "2001:910:800:12" ];
+  # When home:
+  networking.nameservers = [ "192.168.1.20" ];
 
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
