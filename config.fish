@@ -6,3 +6,4 @@ set -U fish_greeting
 
 starship init fish | source
 thefuck --alias | source
+nvm use latest -s

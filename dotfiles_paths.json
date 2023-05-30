@@ -2,7 +2,7 @@
   "alacritty.yml": "~/.config/alacritty/alacritty.yml",
   "coc-settings.json": "~/.config/nvim/coc-settings.json",
   "configuration.nix": "/etc/nixos/configuration.nix",
-  "init.vim": "/etc/neovim/config/init.vim",
+  "init.vim": "~/.config/nvim/init.vim",
   "config.fish": "~/.config/fish/config.fish",
   "fish_plugins": "~/.config/fish/fish_plugins",
   "starship.toml": "~/.config/starship.toml"
