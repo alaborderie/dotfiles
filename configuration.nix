@@ -38,7 +38,7 @@
   # When not home:
   # networking.nameservers = [ "80.67.169.40" "2001:910:800:40" "80.67.169.12" "2001:910:800:12" ];
   # When home:
-  networking.nameservers = [ "192.168.1.20" ];
+  # networking.nameservers = [ "192.168.1.20" ];
 
   # Enable unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -100,6 +100,12 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
+  # Enable flatpak
+  services.flatpak.enable = true;
+
+  # Enable avahi daemon
+  services.avahi.enable = true;
+
   # Enable Valve Index support
   hardware.steam-hardware.enable = true;
   hardware.opengl.driSupport32Bit = true;
@@ -109,6 +115,9 @@
   hardware.opengl.extraPackages = with pkgs; [
     rocm-opencl-icd
   ];
+
+  # Enable OpenRazer
+  hardware.openrazer.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -135,7 +144,7 @@
   users.users.alaborderie = {
     isNormalUser = true;
     description = "Antoine Laborderie";
-    extraGroups = [ "networkmanager" "wheel" "docker" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "plugdev" "openrazer" ];
     shell = pkgs.fish;
     packages = with pkgs; [
       thunderbird
@@ -178,6 +187,8 @@
     steam
     steam-run
     openssl
+    openssl.dev
+    libiconv
     obs-studio
     (pkgs.wrapOBS {
       plugins = with pkgs.obs-studio-plugins; [
@@ -198,6 +209,10 @@
     wine64
     winetricks
     samba
+    pkg-config
+    xivlauncher
+    openrazer-daemon
+    razergenie
   ];
 
   # NodeJS setcap
@@ -211,6 +226,7 @@
   # sessionVariables
   environment.sessionVariables = {
     MOZ_ENABLE_WAYLAND = "1";
+    PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
   };
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -265,10 +281,10 @@
   # services.openssh.enable = true;
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
+  # networking.firewall.allowedTCPPorts = [  ];
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  networking.firewall.enable = false;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
