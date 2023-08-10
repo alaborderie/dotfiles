@@ -11,7 +11,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin("~/.vim/plugged")
   Plug 'lmburns/kimbox'
-  Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-tree/nvim-tree.lua'
   Plug 'nvim-lua/plenary.nvim'
@@ -23,10 +22,9 @@ call plug#begin("~/.vim/plugged")
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-cmake', 'coc-discord', 'coc-elixir', 'coc-erlang_ls', 'coc-eslint', 'coc-flutter', 'coc-go', 'coc-rust-analyzer', 'coc-sh', 'coc-swagger']
-  Plug 'mxw/vim-jsx'
+  Plug 'HerringtonDarkholme/yats.vim'
   Plug 'pangloss/vim-javascript'
-  Plug 'leafgarland/typescript-vim'
-  Plug 'peitalin/vim-jsx-typescript'
+  Plug 'maxmellon/vim-jsx-pretty'
   Plug 'neovim/nvim-lspconfig'
   Plug 'simrat39/rust-tools.nvim'
   Plug 'tpope/vim-fugitive'
@@ -53,7 +51,6 @@ lua require('Comment').setup()
 
 " lualine
 lua require('lualine').setup()
-
 
 " File Explorer
 lua require('nvim-tree').setup()
