@@ -11,6 +11,7 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin("~/.vim/plugged")
   Plug 'lmburns/kimbox'
+  Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-tree/nvim-web-devicons'
   Plug 'nvim-tree/nvim-tree.lua'
   Plug 'nvim-lua/plenary.nvim'
@@ -48,6 +49,7 @@ lua require('Comment').setup()
 
 " lualine
 lua require('lualine').setup()
+
 
 " File Explorer
 lua require('nvim-tree').setup()
