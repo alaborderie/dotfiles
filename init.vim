@@ -22,9 +22,6 @@ call plug#begin("~/.vim/plugged")
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
   let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-cmake', 'coc-discord', 'coc-elixir', 'coc-erlang_ls', 'coc-eslint', 'coc-flutter', 'coc-go', 'coc-rust-analyzer', 'coc-sh', 'coc-swagger']
-  Plug 'HerringtonDarkholme/yats.vim'
-  Plug 'pangloss/vim-javascript'
-  Plug 'maxmellon/vim-jsx-pretty'
   Plug 'neovim/nvim-lspconfig'
   Plug 'simrat39/rust-tools.nvim'
   Plug 'tpope/vim-fugitive'
