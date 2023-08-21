@@ -1,6 +1,5 @@
 require('plugins')
 require('telescope_config')
-require('lsp_config')
 require('keymaps')
 
 -- Comments
@@ -14,6 +13,8 @@ require('nvim-tree').setup()
 
 -- Treesitter
 require('nvim-treesitter.configs').setup{highlight={enable=true}}
+
+vim.g.coc_global_extensions = {'coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-cmake', 'coc-discord', 'coc-elixir', 'coc-erlang_ls', 'coc-eslint', 'coc-flutter', 'coc-go', 'coc-rust-analyzer', 'coc-sh', 'coc-swagger'}
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1

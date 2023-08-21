@@ -1,10 +1,12 @@
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function(use)
+local use = require('packer').use
+
+return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
   use 'lmburns/kimbox'
-  use 'neovim/nvim-lspconfig'
+  use { 'neoclide/coc.nvim', branch = 'release' }
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-tree/nvim-tree.lua'
   use 'nvim-lua/plenary.nvim'
