@@ -16,7 +16,7 @@ fn read_json(path: &Path) -> Result<Value, io::Error> {
     }
 }
 
-fn copy_file(from: &Path, to: &Path) -> Result<u64, io::Error> {
+fn copy_file(from: &Path, to: &Path) -> io::Result<()> {
     println!("copying {:?} to {:?}", from, to);
     if let Some(p) = from.parent() {
         fs::create_dir_all(p)?
@@ -24,8 +24,25 @@ fn copy_file(from: &Path, to: &Path) -> Result<u64, io::Error> {
     if let Some(p) = to.parent() {
         fs::create_dir_all(p)?
     };
-    fs::copy(from, to)
+    fs::copy(from, to)?;
+    Ok(())
 }
+
+fn copy_dir_all(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> io::Result<()> {
+    println!("copying directory");
+    fs::create_dir_all(&dst)?;
+    for entry in fs::read_dir(src)? {
+        let entry = entry?;
+        let ty = entry.file_type()?;
+        if ty.is_dir() {
+            copy_dir_all(entry.path(), dst.as_ref().join(entry.file_name()))?;
+        } else {
+            fs::copy(entry.path(), dst.as_ref().join(entry.file_name()))?;
+        }
+    }
+    Ok(())
+}
+
 
 fn main() {
     println!("Do you want to:");
@@ -52,12 +69,16 @@ fn main() {
         }
     };
     for (git_file, os_file) in json_data.as_object().unwrap() {
+        let is_dir = &git_file.as_str().ends_with('/');
         let os_file_path = &os_file.as_str().unwrap().replace('~', &env::var("HOME").unwrap());
         let (from, to) = match user_input {
             1 => (os_file_path, git_file),
             _ => (git_file, os_file_path)
         };
-        let res = copy_file(Path::new(from), Path::new(to));
+        let res = match is_dir {
+            true => copy_dir_all(Path::new(from), Path::new(to)),
+            false => copy_file(Path::new(from), Path::new(to))
+        };
         match res {
             Ok(_) => println!("File successfully copied"),
             Err(e) => println!("Error while copying file, {:?}", e)

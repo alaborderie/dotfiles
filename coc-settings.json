@@ -1,6 +1,0 @@
-{
-  "coc.preferences.formatOnSave": true,
-  "eslint.autoFixOnSave": true,
-  "javascript.preferences.importModuleSpecifier": "non-relative",
-  "typescript.preferences.importModuleSpecifier": "non-relative"
-}
