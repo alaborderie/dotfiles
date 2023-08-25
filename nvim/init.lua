@@ -26,11 +26,11 @@ vim.cmd [[
   colorscheme kimbox
 ]]
 
-vim.bo.tabstop = 2
-vim.bo.shiftwidth = 2
-vim.bo.expandtab = true
-vim.bo.smartindent = true
-vim.wo.number = true
+vim.opt.tabstop = 2
+vim.opt.shiftwidth = 2
+vim.opt.expandtab = true
+vim.opt.smartindent = true
+vim.opt.number = true
 
 -- open new split panes to right and below
 vim.opt.splitright = true
