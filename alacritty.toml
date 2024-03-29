@@ -1,217 +1,31 @@
-[colors]
-draw_bold_text_with_bright_colors = true
-transparent_background_colors = false
+# Colors (Nord)
 
-[[colors.indexed_colors]]
-color = "#FFA066"
-index = 16
-
-[[colors.indexed_colors]]
-color = "#FF5D62"
-index = 17
-
-[[colors.indexed_colors]]
-color = "#89B482"
-index = 18
-
-[[colors.indexed_colors]]
-color = "#D3869B"
-index = 19
-
-[[colors.indexed_colors]]
-color = "#719190"
-index = 20
-
-[[colors.indexed_colors]]
-color = "#957FB8"
-index = 21
-
-[[colors.indexed_colors]]
-color = "#938AA9"
-index = 22
-
-[[colors.indexed_colors]]
-color = "#EA6962"
-index = 23
-
-[[colors.indexed_colors]]
-color = "#E46876"
-index = 24
-
-[[colors.indexed_colors]]
-color = "#418292"
-index = 25
-
-[[colors.indexed_colors]]
-color = "#2AB074"
-index = 26
-
-[[colors.indexed_colors]]
-color = "#CC6666"
-index = 27
-
-[[colors.indexed_colors]]
-color = "#77A172"
-index = 28
-
-[[colors.indexed_colors]]
-color = "#83A598"
-index = 29
-
-[[colors.indexed_colors]]
-color = "#7E9CD8"
-index = 30
-
-[[colors.indexed_colors]]
-color = "#BD798B"
-index = 31
-
-[[colors.indexed_colors]]
-color = "#E78A4E"
-index = 32
-
-[[colors.indexed_colors]]
-color = "#7E602C"
-index = 33
-
-[[colors.indexed_colors]]
-color = "#A89984"
-index = 34
-
-[[colors.indexed_colors]]
-color = "#625A5A"
-index = 35
-
-[[colors.indexed_colors]]
-color = "#39260E"
-index = 36
-
-[[colors.indexed_colors]]
-color = "#362712"
-index = 37
-
-[[colors.indexed_colors]]
-color = "#291804"
-index = 38
-
-[[colors.indexed_colors]]
-color = "#5E452B"
-index = 39
-
-[[colors.indexed_colors]]
-color = "#E8C097"
-index = 40
-
-[[colors.indexed_colors]]
-color = "#665C54"
-index = 41
-
-[[colors.indexed_colors]]
-color = "#D9AE80"
-index = 42
-
-[[colors.indexed_colors]]
-color = "#7DAEA3"
-index = 43
-
-[[colors.indexed_colors]]
-color = "#F79A32"
-index = 44
-
-[[colors.indexed_colors]]
-color = "#F06431"
-index = 45
-
-[[colors.indexed_colors]]
-color = "#C2A383"
-index = 46
-
-[[colors.indexed_colors]]
-color = "#A25BC4"
-index = 47
-
-[[colors.indexed_colors]]
-color = "#FF5813"
-index = 48
-
-[[colors.indexed_colors]]
-color = "#A83232"
-index = 49
-
-[[colors.indexed_colors]]
-color = "#989719"
-index = 50
-
-[[colors.indexed_colors]]
-color = "#98676A"
-index = 51
-
-[[colors.indexed_colors]]
-color = "#A06469"
-index = 52
-
-[[colors.indexed_colors]]
-color = "#A3B95A"
-index = 53
-
-[colors.bright]
-black = "#676767"
-blue = "#DC3958"
-cyan = "#4C96A8"
-green = "#A3B95A"
-magenta = "#FE8019"
-red = "#F14A68"
-white = "#51412C"
-yellow = "#F79A32"
-
-[colors.cursor]
-cursor = "#f79a32"
-text = "#221a02"
-
-[colors.dim]
-black = "#676F78"
-blue = "#733E8B"
-cyan = "#088649"
-green = "#088649"
-magenta = "#7E5053"
-red = "#DC3958"
-white = "#A89983"
-yellow = "#F79A32"
-
-[colors.footer_bar]
-background = "#c5c8c6"
-foreground = "#1d1f21"
-
-[colors.hints.end]
-background = "#f79a32"
-foreground = "#201f1f"
-
-[colors.hints.start]
-background = "#f79a32"
-foreground = "#201f1f"
-
-[colors.normal]
-black = "#201F1F"
-blue = "#924F79"
-cyan = "#088649"
-green = "#819C3B"
-magenta = "#7E5053"
-red = "#DC3958"
-white = "#A89983"
-yellow = "#F79A32"
-
+# Default colors
 [colors.primary]
-background = "#221a02"
-bright_foreground = "#f06431"
-foreground = "#c2a383"
+background = '#2E3440'
+foreground = '#D8DEE9'
 
-[colors.selection]
-background = "#889b4a"
-text = "#221a02"
+# Normal colors
+[colors.normal]
+black   = '#3B4252'
+red     = '#BF616A'
+green   = '#A3BE8C'
+yellow  = '#EBCB8B'
+blue    = '#81A1C1'
+magenta = '#B48EAD'
+cyan    = '#88C0D0'
+white   = '#E5E9F0'
 
-[colors.vi_mode_cursor]
-cursor = "CellForeground"
-text = "CellBackground"
+# Bright colors
+[colors.bright]
+black   = '#4C566A'
+red     = '#BF616A'
+green   = '#A3BE8C'
+yellow  = '#EBCB8B'
+blue    = '#81A1C1'
+magenta = '#B48EAD'
+cyan    = '#8FBCBB'
+white   = '#ECEFF4'
 
 [font.bold]
 family = "FiraCode Nerd Font"
