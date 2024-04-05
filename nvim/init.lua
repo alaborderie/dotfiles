@@ -23,7 +23,7 @@ vim.opt.termguicolors = true
 
 vim.cmd [[
   syntax enable
-  colorscheme kimbox
+  colorscheme onenord
 ]]
 
 vim.opt.tabstop = 2

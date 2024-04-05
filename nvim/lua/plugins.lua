@@ -5,7 +5,7 @@ local use = require('packer').use
 return require('packer').startup(function()
   use 'wbthomason/packer.nvim'
 
-  use 'lmburns/kimbox'
+  use 'rmehri01/onenord.nvim'
   use { 'neoclide/coc.nvim', branch = 'release' }
   use 'nvim-tree/nvim-web-devicons'
   use 'nvim-tree/nvim-tree.lua'
