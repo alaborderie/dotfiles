@@ -43,5 +43,7 @@ style = "Italic"
 family = "FiraCode Nerd Font"
 style = "Regular"
 
-[shell]
+[terminal]
+
+[terminal.shell]
 program = "/bin/fish"
