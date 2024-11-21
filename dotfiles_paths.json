@@ -1,7 +1,0 @@
-{
-  "alacritty.toml": "~/.config/alacritty/alacritty.toml",
-  "nvim/": "~/.config/nvim",
-  "config.fish": "~/.config/fish/config.fish",
-  "fish_plugins": "~/.config/fish/fish_plugins",
-  "starship.toml": "~/.config/starship.toml"
-}
