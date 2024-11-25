@@ -26,26 +26,32 @@ echo "installing fish..."
 $install_command fish
 echo "setting fish as default shell..."
 sudo chsh -s $(which fish)
-echo "installing fisher..."
-curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher
 echo "installing starship..."
 curl -sS https://starship.rs/install.sh | sh
 echo "installing thefuck"
 $install_command thefuck
-echo "installing nvm..."
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
-echo "installing alacritty and zen browser..."
+echo "installing alacritty fira code nerd font and zen browser..."
 if [[ "$install_command" == "brew"* ]]; then
-  brew install --cask alacritty zen-browser
+  brew install --cask alacritty font-fira-code-nerd-font zen-browser
+  xattr -dr com.apple.quarantine "/Applications/Alacritty.app"
 else
-  $install_command alacritty
+  $install_command alacritty ttf-firacode-nerd
   flatpak install flathub io.github.zen_browser.zen
 fi
+echo "installing spacevim"
+curl -sLf https://spacevim.org/install.sh | bash
 echo "copying dotfiles..."
 mkdir -p ~/.config/alacritty
 mkdir -p ~/.config/fish
 cp alacritty.toml ~/.config/alacritty/.
 cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
-echo "installing fish plugins..."
-fisher update
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo "macOS detected so we change fish path in alacritty.toml"
+  sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/alacritty/alacritty.toml
+fi
+echo "adding paths to fish..."
+fish -c "fish_add_path /opt/homebrew/bin"
+fish -c "fish_add_path /usr/local/bin"
+echo "installing fisher and plugins..."
+fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
