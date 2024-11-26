@@ -67,6 +67,10 @@ $install_command docker
 if [[ "%OSTYPE" == "darwin"* ]]; then
   brew install colima
   colima start
+  mkdir ~/.docker/cli-plugins
+  curl -SL https://github.com/docker/compose/releases/download/v2.29.2/docker-compose-darwin-aarch64 -o ~/.docker/cli-plugins/docker-compose
+  curl -SL https://github.com/docker/buildx/releases/download/v0.17.0/buildx-v0.17.0.darwin-arm64 -o ~/.docker/cli-plugins/docker-buildx
+  chmod +x ~/.docker/cli-plugins/docker-*
 else
   sudo systemctl start docker.service
   sudo systemctl enable docker.service
