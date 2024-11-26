@@ -1,6 +1,8 @@
 #!/bin/bash
 # install everything under macOS or linux
 if [[ "$OSTYPE" == "darwin"* ]]; then
+  echo "installing xcode-select for build tools (it's async, if something fails after please rerun the script)"
+  xcode-select --install
   echo "installing homebrew...";
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
 
@@ -49,9 +51,25 @@ cp starship.toml ~/.config/.
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS detected so we change fish path in alacritty.toml"
   sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/alacritty/alacritty.toml
+  echo "and we install amethyst and linearmouse"
+  brew install --cask linearmouse amethyst
 fi
 echo "adding paths to fish..."
 fish -c "fish_add_path /opt/homebrew/bin"
 fish -c "fish_add_path /usr/local/bin"
 echo "installing fisher and plugins..."
 fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
+echo "installing rustup and rust toolchain"
+$install_command rustup
+rustup default stable
+echo "installing docker"
+$install_command docker
+if [[ "%OSTYPE" == "darwin"* ]]; then
+  brew install colima
+  colima start
+else
+  sudo systemctl start docker.service
+  sudo systemctl enable docker.service
+  sudo usermod -aG docker $USER
+  newgrp docker
+fi
