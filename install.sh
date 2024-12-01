@@ -34,27 +34,29 @@ echo "installing starship..."
 curl -sS https://starship.rs/install.sh | sh
 echo "installing thefuck"
 $install_command thefuck
-echo "installing alacritty fira code nerd font and zen browser..."
+echo "installing kitty fira code nerd font and zen browser..."
 if [[ "$install_command" == "brew"* ]]; then
-  brew install --cask alacritty font-fira-code-nerd-font zen-browser
+  brew install --cask kitty font-fira-code-nerd-font zen-browser
   xattr -dr com.apple.quarantine "/Applications/Alacritty.app"
 else
-  $install_command alacritty ttf-firacode-nerd
+  $install_command kitty ttf-firacode-nerd
   flatpak install flathub io.github.zen_browser.zen
 fi
-echo "installing spacevim"
-curl -sLf https://spacevim.org/install.sh | bash
+echo "install vim and vim-plug"
+mkdir -p ~/.config/.vim/autoload
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+$install_command vim
 echo "copying dotfiles..."
-mkdir -p ~/.config/alacritty
+mkdir -p ~/.config/kitty
 mkdir -p ~/.config/fish
-cp alacritty.toml ~/.config/alacritty/.
+cp kitty.conf ~/.config/kitty/.
 cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
+cp .vimrc ~/.vimrc
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "macOS detected so we change fish path in alacritty.toml"
-  sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/alacritty/alacritty.toml
-  echo "and we install amethyst and linearmouse"
-  brew install --cask linearmouse amethyst
+  echo "macOS detected so we change fish path in kitty.conf"
+  sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/kitty/kitty.conf
 fi
 echo "adding paths to fish..."
 fish -c "fish_add_path /opt/homebrew/bin"
