@@ -66,7 +66,7 @@ $install_command rustup
 rustup default stable
 echo "installing docker"
 $install_command docker
-if [[ "%OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
   brew install colima
   colima start
   mkdir ~/.docker/cli-plugins
