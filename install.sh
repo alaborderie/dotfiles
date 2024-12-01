@@ -11,9 +11,11 @@ elif [ -f "/etc/arch-release" ]; then
   echo "arch detected"
   echo "installing yay git and base-devel"
   sudo pacman -Sy --needed base-devel git flatpak
-  git clone https://aur.archlinux.org/yay.git
+  git clone https://aur.archlinux.org/yay-bin.git
   cd yay-bin
   makepkg -si
+  cd ..
+  rm -rf yay-bin
   install_command="yay -Sy"
 else
   echo "other distro detected, use apt and install git and build-essential"
