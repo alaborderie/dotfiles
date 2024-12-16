@@ -66,6 +66,7 @@ fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/fun
 echo "installing rustup and rust toolchain"
 $install_command rustup
 rustup default stable
+rustup install stable
 echo "installing docker"
 $install_command docker
 if [[ "$OSTYPE" == "darwin"* ]]; then
