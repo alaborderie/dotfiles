@@ -34,12 +34,11 @@ echo "installing starship..."
 curl -sS https://starship.rs/install.sh | sh
 echo "installing thefuck"
 $install_command thefuck
-echo "installing kitty fira code nerd font and zen browser..."
+echo "installingzen browser..."
 if [[ "$install_command" == "brew"* ]]; then
-  brew install --cask kitty font-fira-code-nerd-font zen-browser
-  xattr -dr com.apple.quarantine "/Applications/Alacritty.app"
+  brew install --cask zen-browser
 else
-  $install_command kitty ttf-firacode-nerd
+  $install_command ghostty
   flatpak install flathub io.github.zen_browser.zen
 fi
 echo "install vim and vim-plug"
@@ -48,15 +47,15 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 $install_command vim
 echo "copying dotfiles..."
-mkdir -p ~/.config/kitty
+mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/fish
-cp kitty.conf ~/.config/kitty/.
+cp ghostty.conf ~/.config/ghostty/config
 cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
 cp .vimrc ~/.vimrc
 if [[ "$OSTYPE" == "darwin"* ]]; then
-  echo "macOS detected so we change fish path in kitty.conf"
-  sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/kitty/kitty.conf
+  echo "macOS detected so we change fish path in ghostty.conf"
+  sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/ghostty/config
 fi
 echo "adding paths to fish..."
 fish -c "fish_add_path /opt/homebrew/bin"
