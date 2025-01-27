@@ -3,8 +3,8 @@
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "installing xcode-select for build tools (it's async, if something fails after please rerun the script)"
   xcode-select --install
-  echo "installing homebrew...";
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)";
+  echo "installing homebrew..."
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   install_command="brew install"
 elif [ -f "/etc/arch-release" ]; then
@@ -41,18 +41,16 @@ else
   $install_command ghostty
   flatpak install flathub io.github.zen_browser.zen
 fi
-echo "install vim and vim-plug"
-mkdir -p ~/.config/.vim/autoload
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-$install_command vim
+echo "install neovim, lazygit, fzf, ripgrep, fd, and lazyvim"
+$install_command neovim lazygit fzf ripgrep fd
+git clone https://github.com/LazyVim/starter ~/.config/nvim
+rm -rf ~/.config/nvim/.git
 echo "copying dotfiles..."
 mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/fish
 cp ghostty.conf ~/.config/ghostty/config
 cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
-cp .vimrc ~/.vimrc
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS detected so we change fish path in ghostty.conf"
   sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/ghostty/config
