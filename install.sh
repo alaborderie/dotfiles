@@ -41,10 +41,9 @@ else
   $install_command ghostty
   flatpak install flathub io.github.zen_browser.zen
 fi
-echo "install neovim, lazygit, fzf, ripgrep, fd, and lazyvim"
+echo "install neovim, lazygit, fzf, ripgrep, fd, and personal vim config"
 $install_command neovim lazygit fzf ripgrep fd
-git clone https://github.com/LazyVim/starter ~/.config/nvim
-rm -rf ~/.config/nvim/.git
+git clone https://github.com/alaborderie/nvim ~/.config/nvim
 echo "copying dotfiles..."
 mkdir -p ~/.config/ghostty
 mkdir -p ~/.config/fish
