@@ -15,7 +15,7 @@
   "features": {
     "edit_prediction_provider": "copilot"
   },
-  "assistant": {
+  "agent": {
     "default_model": {
       "provider": "openai",
       "model": "gpt-4.1"
@@ -44,5 +44,10 @@
   "tabs": {
     "file_icons": true,
     "git_status": true
+  },
+  "terminal": {
+    "shell": {
+      "program": "fish"
+    }
   }
 }
