@@ -30,8 +30,8 @@
     }
   },
   "vim_mode": true,
-  "ui_font_size": 14,
-  "buffer_font_size": 14,
+  "ui_font_size": 12,
+  "buffer_font_size": 12,
   "theme": {
     "mode": "system",
     "light": "One Light",
@@ -46,6 +46,7 @@
     "git_status": true
   },
   "terminal": {
+    "font_family": "FiraCode Nerd Font Mono",
     "shell": {
       "program": "fish"
     }
