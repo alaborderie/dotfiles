@@ -50,6 +50,7 @@ mkdir -p ~/.config/fish
 cp ghostty.conf ~/.config/ghostty/config
 cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
+cp -R zed ~/.config/.
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS detected so we change fish path in ghostty.conf"
   sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/ghostty/config
