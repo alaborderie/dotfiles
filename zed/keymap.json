@@ -159,6 +159,8 @@
       // Telescope
       "space f f": "file_finder::Toggle",
       "space space": "file_finder::Toggle",
+      // Find in buffer
+      "space f b": "tab_switcher::ToggleAll",
       // Quit zed
       "space q q": "zed::Quit",
       // Terminal
