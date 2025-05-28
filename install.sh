@@ -20,7 +20,7 @@ elif [ -f "/etc/arch-release" ]; then
 else
   echo "other distro detected, use apt and install git and build-essential"
   sudo apt update
-  sudo apt install build-essential git flatpak
+  sudo apt install build-essential git flatpak curl less
   install_command="sudo apt install -y"
   echo "adding repositories"
   sudo apt-add-repository ppa:fish-shell/release-3 && sudo apt update
@@ -51,6 +51,7 @@ cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
 cp -R git ~/.config/git
 if [[ "$install_command" = "yay"* ]]; then
+	$install_command pavucontrol hyprland hyprlock thunar waybar statusbar
 	cp -R hyprland/* ~/.config/.
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
