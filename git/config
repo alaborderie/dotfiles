@@ -1,0 +1,7 @@
+[user]
+	name = Antoine Laborderie
+	email = antoine.laborderie@gmail.com
+[advice]
+  statusHints = false
+[color]
+	ui = true

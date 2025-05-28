@@ -34,12 +34,11 @@ echo "installing starship..."
 curl -sS https://starship.rs/install.sh | sh
 echo "installing thefuck"
 $install_command thefuck
-echo "installingzen browser..."
+echo "installing ghostty and zen browser..."
 if [[ "$install_command" == "brew"* ]]; then
   brew install --cask zen-browser
 else
-  $install_command ghostty
-  flatpak install flathub io.github.zen_browser.zen
+  $install_command ghostty zen_browser
 fi
 echo "install neovim, lazygit, fzf, ripgrep, fd, and personal vim config"
 $install_command neovim lazygit fzf ripgrep fd
@@ -50,7 +49,10 @@ mkdir -p ~/.config/fish
 cp ghostty.conf ~/.config/ghostty/config
 cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
-cp -R zed ~/.config/.
+cp -R git ~/.config/git
+if [[ "$install_command" = "yay"* ]]; then
+	cp -R hyprland/* ~/.config/.
+fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS detected so we change fish path in ghostty.conf"
   sed -i '' "s/\/bin\/fish/\/opt\/homebrew\/bin\/fish/g" ~/.config/ghostty/config

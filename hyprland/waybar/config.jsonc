@@ -1,0 +1,81 @@
+{
+  "layer": "top",
+  "modules-left": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+"custom/battery",
+    "custom/date",
+    "custom/nettraf",
+    "pulseaudio",
+    "custom/memory",
+    "tray",
+  ],
+  "hyprland/workspaces": {
+    "all-outputs": true,
+    "on-click": "activate",
+    "format": "{icon}",
+    "format-icons": {
+      "1": "󰌀",
+      "2": "",
+      "3": "󰯈",
+      "4": "󱁇",
+      "5": "",
+      "6": "",
+      "7": "󱍅",
+      "8": "",
+      "9": "",
+      "10": "󰡑",
+    },
+  },
+  "tray": {
+    "icon-size": 18,
+    "spacing": 6,
+  },
+  "custom/battery": {
+  	"tooltip": false,
+  	"interval": 4,
+  	"exec": "/usr/bin/statusbar/battery"
+   "return-type": "json"
+  },
+  "custom/date": {
+    "tooltip": false,
+    "interval": 2,
+    "exec": "/usr/bin/statusbar/sb-time",
+  },
+  "custom/nettraf": {
+    "tooltip": false,
+    "interval": 4,
+    "exec": "/usr/bin/statusbar/sb-nettraf",
+    "on-click-right": "ghostty --class floating -e nmtui",
+  },
+  "pulseaudio": {
+    "tooltip": false,
+    "format": "{icon}{volume}%",
+    "format-muted": "🔇Muted",
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+    "on-click-right": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-",
+    "scroll-step": 5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "󰷰",
+      "portable": "󰷰",
+      "car": "󰄋",
+      "default": [
+        "🔈",
+        "🔉",
+        "🔊"
+      ],
+    },
+  },
+  "custom/memory": {
+    "tooltip": false,
+    "interval": 4,
+    "exec": "echo \"🧠 $(free -h | awk '/Mem:/ { print $3 }' | cut -f1 -d 'i')\"",
+    "on-click-right": "ghostty --class floating -e htop",
+  },
+}
