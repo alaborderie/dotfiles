@@ -51,7 +51,7 @@ cp config.fish fish_plugins ~/.config/fish/.
 cp starship.toml ~/.config/.
 cp -R git ~/.config/git
 if [[ "$install_command" = "yay"* ]]; then
-	$install_command pavucontrol hyprland hyprlock thunar waybar statusbar
+	$install_command pavucontrol hyprland hyprlock hyprpaper thunar waybar rofi mako bat
 	cp -R hyprland/* ~/.config/.
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
