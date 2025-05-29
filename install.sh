@@ -44,15 +44,9 @@ echo "install neovim, lazygit, fzf, ripgrep, fd, and personal vim config"
 $install_command neovim lazygit fzf ripgrep fd
 git clone https://github.com/alaborderie/nvim ~/.config/nvim
 echo "copying dotfiles..."
-mkdir -p ~/.config/ghostty
-mkdir -p ~/.config/fish
-cp ghostty.conf ~/.config/ghostty/config
-cp config.fish fish_plugins ~/.config/fish/.
-cp starship.toml ~/.config/.
-cp -R git ~/.config/git
+cp -R .config/* ~/.config/.
 if [[ "$install_command" = "yay"* ]]; then
-	$install_command pavucontrol hyprland hyprlock hyprpaper thunar waybar rofi mako bat
-	cp -R hyprland/* ~/.config/.
+	$install_command pavucontrol hyprland hyprlock hyprpaper thunar waybar rofi mako bat wl-clip-persist
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS detected so we change fish path in ghostty.conf"
