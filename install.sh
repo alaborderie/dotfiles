@@ -38,7 +38,7 @@ echo "installing ghostty and zen browser..."
 if [[ "$install_command" == "brew"* ]]; then
   brew install --cask zen-browser
 else
-  $install_command ghostty zen_browser
+  $install_command ghostty zen-browser-bin
 fi
 echo "install neovim, lazygit, fzf, ripgrep, fd, and personal vim config"
 $install_command neovim lazygit fzf ripgrep fd
