@@ -46,7 +46,7 @@ git clone https://github.com/alaborderie/nvim ~/.config/nvim
 echo "copying dotfiles..."
 cp -R .config/* ~/.config/.
 if [[ "$install_command" = "yay"* ]]; then
-  $install_command pavucontrol hyprland hyprlock hyprpaper hyprshot thunar waybar rofi mako bat wl-clip-persist brightnessctl
+  $install_command pavucontrol hyprland hyprlock hyprpaper hyprshot thunar waybar rofi mako bat wl-clip-persist brightnessctl swayimg
 fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   echo "macOS detected so we change fish path in ghostty.conf"
