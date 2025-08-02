@@ -1,0 +1,12 @@
+#!/bin/bash
+
+# Check for external monitor (excluding eDP-1)
+external=$(hyprctl monitors | grep -v eDP-1 | grep -E 'Monitor [^ ]+ \(enabled\)' | wc -l)
+
+if [ "$external" -gt 0 ]; then
+    # External monitor connected, just turn off internal display
+    hyprctl keyword monitor "eDP-1, disable"
+else
+    # No external monitor: sleep, then hibernate after 15min if lid still closed
+    systemctl suspend-then-hibernate
+fi

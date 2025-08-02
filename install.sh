@@ -75,4 +75,5 @@ else
   sudo systemctl enable docker.service
   sudo usermod -aG docker $USER
   newgrp docker
+  sudo sed 's/.*HibernateDelaySec=.*/HibernateDelaySec=900/g' /etc/systemd/sleep.conf
 fi
