@@ -34,3 +34,5 @@ fish -c "fish_add_path /opt/homebrew/bin"
 fish -c "fish_add_path /usr/local/bin"
 echo "installing fisher and plugins..."
 fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
+echo "copying wezterm config"
+cp .wezterm.lua /mnt/c/Users/antoine.laborderie/.wezterm.lua
