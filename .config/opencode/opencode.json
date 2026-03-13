@@ -1,6 +1,13 @@
 {
   "plugin": [
-    "oh-my-opencode@latest"
+    "oh-my-opencode@latest",
+    "@franlol/opencode-md-table-formatter@latest",
+    "@tarquinen/opencode-dcp@latest"
   ],
-  "$schema": "https://opencode.ai/config.json"
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "compaction": {
+      "model": "github-copilot/claude-haiku-4.5"
+    }
+  }
 }
