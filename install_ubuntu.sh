@@ -8,17 +8,11 @@ echo "Updating packages and installing base tools..."
 sudo apt update
 sudo apt install -y build-essential git flatpak curl less wget htop vim openssh-client python3-pip
 
-echo "Adding fish PPA..."
-sudo apt-add-repository -y ppa:fish-shell/release-3
-sudo apt update
-
-echo "Installing fish..."
-sudo apt install -y fish
-echo "Setting fish as default shell..."
-sudo chsh -s "$(which fish)" "$USER"
-
 echo "Installing starship..."
 curl -sS https://starship.rs/install.sh | sh
+
+echo "Setting bash as default shell..."
+sudo chsh -s "$(which bash)" "$USER"
 
 echo "Installing thefuck..."
 sudo apt install -y thefuck
@@ -59,12 +53,13 @@ fi
 
 echo "Copying dotfiles..."
 cp -R .config/* ~/.config/.
+cp .bashrc ~/
 
-echo "Adding paths to fish..."
-fish -c "fish_add_path /usr/local/bin"
-
-echo "Installing fisher and plugins..."
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
+echo "Installing nvm and node lts..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+nvm install --lts
 
 echo "Installing rustup and stable toolchain..."
 if ! command -v rustup &> /dev/null; then

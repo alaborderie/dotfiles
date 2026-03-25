@@ -19,11 +19,8 @@ else
   echo "yay already installed, skipping"
 fi
 
-# Shell
-echo "Installing fish..."
-yay -Sy --needed fish
-echo "Setting fish as default shell..."
-sudo chsh -s "$(which fish)" "$USER"
+echo "Setting bash as default shell..."
+sudo chsh -s "$(which bash)" "$USER"
 
 echo "Installing starship..."
 curl -sS https://starship.rs/install.sh | sh
@@ -125,18 +122,17 @@ sudo systemctl start docker.service
 sudo systemctl enable docker.service
 sudo usermod -aG docker "$USER"
 
-# Copy dotfiles
 echo "Copying dotfiles..."
 cp -R .config/* ~/.config/.
+cp .bashrc ~/
 
-# Fish setup
-echo "Adding paths to fish..."
-fish -c "fish_add_path /usr/local/bin"
+echo "Installing nvm and node lts..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+nvm install --lts
 
-echo "Installing fisher and plugins..."
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
 
-# System config
 echo "Configuring hibernate delay..."
 sudo sed -i 's/.*HibernateDelaySec=.*/HibernateDelaySec=900/g' /etc/systemd/sleep.conf
 
