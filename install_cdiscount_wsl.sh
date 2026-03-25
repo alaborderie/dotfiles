@@ -27,10 +27,6 @@ apt install -y \
   fonts-wqy-zenhei xfonts-scalable \
   cookiecutter
 
-# ─── fish shell ───────────────────────────────────────────────────────────────
-echo "installing fish..."
-apt install -y fish
-
 # ─── github cli ───────────────────────────────────────────────────────────────
 echo "installing gh..."
 mkdir -p -m 755 /etc/apt/keyrings
@@ -139,24 +135,23 @@ git clone https://github.com/alaborderie/nvim ~/.config/nvim
 
 # ─── dotfiles ─────────────────────────────────────────────────────────────────
 echo "copying dotfiles..."
-cp -R .config/fish .config/git .config/starship.toml ~/.config/.
-echo "updating XDG_CONFIG_HOME"
-sed -i 's/\/home\/alaborderie/\/root/g' /root/.config/fish/fish_variables
+cp -R .config/git .config/starship.toml ~/.config/.
+cp .bashrc ~/
 
-# ─── fish paths & plugins ─────────────────────────────────────────────────────
-echo "adding paths to fish..."
-fish -c "fish_add_path /usr/local/bin"
-fish -c "fish_add_path /usr/local/go/bin"
-echo "installing fisher and plugins..."
-fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher update"
+# ─── bash as default shell ────────────────────────────────────────────────────
+echo "setting bash as default shell..."
+chsh -s "$(which bash)" "$USER"
 
-# ─── node (via nvm.fish) ──────────────────────────────────────────────────────
-echo "installing node lts via nvm..."
-fish -c "nvm install lts && nvm use lts"
+# ─── node (via nvm) ───────────────────────────────────────────────────────────
+echo "installing nvm and node lts..."
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+nvm install --lts
 
 # ─── npm globals ──────────────────────────────────────────────────────────────
 echo "installing npm global packages..."
-fish -c "npm install -g opencode-ai typescript typescript-language-server yaml-language-server pnpm"
+npm install -g opencode-ai typescript typescript-language-server yaml-language-server pnpm
 
 # ─── rtk ──────────────────────────────────────────────────────────────────────
 echo "installing rtk..."
