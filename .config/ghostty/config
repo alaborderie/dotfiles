@@ -1,2 +1,2 @@
-command = /bin/fish
+command = /bin/bash
 theme = Catppuccin Mocha
