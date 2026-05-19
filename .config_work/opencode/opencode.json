@@ -1,0 +1,66 @@
+{
+  "plugin": [
+    "oh-my-openagent@latest",
+    "@franlol/opencode-md-table-formatter@latest"
+  ],
+  "$schema": "https://opencode.ai/config.json",
+  "agent": {
+    "compaction": {
+      "model": "github-copilot/claude-haiku-4.5"
+    }
+  },
+  "provider": {
+    "litellm": {
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://localhost:4000",
+        "apiKey": "nicotest"
+      },
+      "models": {
+        "kimi-k2.5": {
+          "id": "kimi-k2.5"
+        }
+      }
+    }
+  },
+  "mcp": {
+    "atlassian": {
+      "type": "local",
+      "command": [
+        "uvx",
+        "mcp-atlassian"
+      ],
+      "environment": {
+        "JIRA_URL": "https://<<TO_FILL>>",
+        "JIRA_USERNAME": "<<TO_FILL>>",
+        "JIRA_API_TOKEN": "<<TO_FILL>>",
+        "CONFLUENCE_URL": "<<TO_FILL>>",
+        "CONFLUENCE_USERNAME": "<<TO_FILL>>",
+        "CONFLUENCE_API_TOKEN": "<<TO_FILL>>"
+      },
+      "timeout": 30000
+    },
+    "azure-devops": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "--registry",
+        "https://<<TO_FILL>>/repository/npm-group/",
+        "@<<TO_FILL>>/mcp-azure-devops"
+      ],
+      "environment": {
+        "AZURE_DEVOPS_ORG_URL": "<<TO_FILL>>",
+        "AZURE_DEVOPS_AUTH_METHOD": "pat",
+        "AZURE_DEVOPS_PAT": "<<TO_FILL>>",
+        "AZURE_DEVOPS_DEFAULT_PROJECT": "<<TO_FILL>>"
+      },
+      "timeout": 30000
+    }
+  },
+  "permission": {
+    "bash": "allow",
+    "edit": "allow",
+    "mcp": "allow"
+  }
+}

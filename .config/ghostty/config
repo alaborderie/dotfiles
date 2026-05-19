@@ -1,2 +1,11 @@
-command = /bin/fish
+command = zsh
 theme = Catppuccin Mocha
+
+# Hide all window chrome (titlebar, close/fullscreen buttons, tab bar)
+window-decoration = false
+gtk-titlebar = false
+gtk-tabs-location = hidden
+gtk-wide-tabs = false
+
+# No "Close this window?" prompt on Alt+Q / close
+confirm-close-surface = false

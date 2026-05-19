@@ -1,0 +1,71 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "agents": {
+    "sisyphus": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "max"
+    },
+    "hephaestus": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "medium"
+    },
+    "oracle": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "high"
+    },
+    "librarian": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "explore": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "multimodal-looker": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "prometheus": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "max"
+    },
+    "metis": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "max"
+    },
+    "momus": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "medium"
+    },
+    "atlas": {
+      "model": "litellm/kimi-k2.5"
+    }
+  },
+  "categories": {
+    "visual-engineering": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "ultrabrain": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "xhigh"
+    },
+    "artistry": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "high"
+    },
+    "quick": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "unspecified-low": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "unspecified-high": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "max"
+    },
+    "writing": {
+      "model": "litellm/kimi-k2.5"
+    },
+    "deep": {
+      "model": "litellm/kimi-k2.5",
+      "variant": "medium"
+    }
+  }
+}

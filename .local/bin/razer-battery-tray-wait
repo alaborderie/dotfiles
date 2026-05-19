@@ -1,0 +1,100 @@
+#!/usr/bin/env bash
+# Launch the Razer battery tray, waiting for the device to be reachable first
+# and then watching sysfs for actual USB removal of the dongle.
+#
+# We deliberately do NOT pass --quit-on-disconnect to the tray. That flag
+# fires on mouse sleep too (which throws transient D-Bus errors), which would
+# cycle the service many times a day and replay the startup animation each
+# time. Instead we let the tray's own loop hide/show the icon during sleep,
+# and we own the harder case here: a physical unplug requires fresh D-Bus
+# references, so we kill the tray and exit non-zero so systemd restarts us
+# and we wait for the next plug.
+set -eu
+
+DEVICE_NAME="${1:-Naga}"
+USB_VENDOR="${RAZER_USB_VENDOR:-1532}"
+USB_PRODUCT="${RAZER_USB_PRODUCT:-00a8}"
+READY_TIMEOUT="${RAZER_TRAY_TIMEOUT:-1800}"
+POLL_INTERVAL="${RAZER_TRAY_POLL_INTERVAL:-2}"
+TRAY="$HOME/perso/RazerBatteryTray/.venv/bin/razer-battery-tray"
+PYTHON="$HOME/perso/RazerBatteryTray/.venv/bin/python3"
+
+if [ ! -x "$TRAY" ] || [ ! -x "$PYTHON" ]; then
+  echo "razer-battery-tray-wait: tray or python not found in venv ($TRAY)" >&2
+  exit 127
+fi
+
+# Return the sysfs path of the dongle if present, empty otherwise.
+find_dongle() {
+  for vendor_file in /sys/bus/usb/devices/*/idVendor; do
+    [ -r "$vendor_file" ] || continue
+    [ "$(cat "$vendor_file" 2>/dev/null)" = "$USB_VENDOR" ] || continue
+    dev_path=$(dirname "$vendor_file")
+    [ "$(cat "$dev_path/idProduct" 2>/dev/null)" = "$USB_PRODUCT" ] && {
+      printf '%s' "$dev_path"
+      return 0
+    }
+  done
+  return 1
+}
+
+# Block until openrazer reports a real (>0 or charging) battery for the device.
+wait_for_ready() {
+  attempts=$(( READY_TIMEOUT / POLL_INTERVAL ))
+  for _ in $(seq 1 "$attempts"); do
+    if "$PYTHON" - "$DEVICE_NAME" <<'PY' 2>/dev/null
+import sys
+import openrazer.client
+needle = sys.argv[1].lower()
+mgr = openrazer.client.DeviceManager()
+for dev in mgr.devices:
+    if needle not in dev.name.lower() or not dev.has("battery"):
+        continue
+    try:
+        level = dev.battery_level
+    except Exception:
+        sys.exit(1)
+    if (level and level > 0) or dev.is_charging:
+        sys.exit(0)
+sys.exit(1)
+PY
+    then
+      return 0
+    fi
+    sleep "$POLL_INTERVAL"
+  done
+  return 1
+}
+
+wait_for_ready || {
+  echo "razer-battery-tray-wait: device matching '$DEVICE_NAME' not ready within ${READY_TIMEOUT}s" >&2
+  exit 1
+}
+
+DONGLE_PATH=$(find_dongle) || {
+  echo "razer-battery-tray-wait: dongle ${USB_VENDOR}:${USB_PRODUCT} not in sysfs after readiness check" >&2
+  exit 1
+}
+
+"$TRAY" "$DEVICE_NAME" &
+TRAY_PID=$!
+
+# Ensure we don't leave an orphan tray if we're killed.
+trap 'kill "$TRAY_PID" 2>/dev/null || true' TERM INT HUP
+
+# Watch the dongle's sysfs node. When it disappears we exit non-zero, the
+# systemd unit restarts us, and the wait_for_ready loop above blocks until
+# the dongle is back.
+while kill -0 "$TRAY_PID" 2>/dev/null; do
+  if [ ! -r "$DONGLE_PATH/idVendor" ] || \
+     [ "$(cat "$DONGLE_PATH/idVendor" 2>/dev/null)" != "$USB_VENDOR" ]; then
+    echo "razer-battery-tray-wait: dongle unplugged, killing tray to refresh D-Bus refs" >&2
+    kill "$TRAY_PID" 2>/dev/null || true
+    wait "$TRAY_PID" 2>/dev/null || true
+    exit 1
+  fi
+  sleep "$POLL_INTERVAL"
+done
+
+# Tray exited on its own. Propagate its status so systemd's on-failure works.
+wait "$TRAY_PID"
