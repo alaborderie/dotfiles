@@ -87,7 +87,8 @@ install_brew_packages \
   gh \
   openssh \
   python@3.13 \
-  zsh
+  zsh \
+  wl-clipboard
 
 echo "Installing starship..."
 curl -sS https://starship.rs/install.sh | sh
@@ -120,7 +121,7 @@ sudo chsh -s "$(which zsh)" "$USER" ||
   echo "chsh failed (likely AD/SSSD-managed user) — .bashrc will exec zsh on interactive sessions instead."
 
 echo "Installing additional CLI tools from Arch setup..."
-sudo apt install neofetch
+sudo apt install fastfetch
 install_brew_packages \
   docker-compose \
   golangci-lint \
@@ -215,6 +216,11 @@ if command -v gsettings >/dev/null 2>&1; then
 else
   echo "gsettings not found, skipping GNOME setup"
 fi
+
+echo "Installing additional software"
+brew install thefuck
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
+curl -fsSL https://claude.ai/install.sh | bash
 
 echo ""
 echo "=== Ubuntu/Debian setup complete ==="
