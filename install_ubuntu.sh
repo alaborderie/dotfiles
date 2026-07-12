@@ -117,7 +117,12 @@ for repo in \
 done
 
 echo "Setting zsh as default shell..."
-sudo chsh -s "$(which zsh)" "$USER" ||
+# The shell must be listed in /etc/shells: AccountsService hides users with an
+# unlisted login shell, which makes GDM think no users exist and boot into
+# gnome-initial-setup instead of the login screen.
+ZSH_PATH="$(which zsh)"
+grep -qxF "$ZSH_PATH" /etc/shells || echo "$ZSH_PATH" | sudo tee -a /etc/shells
+sudo chsh -s "$ZSH_PATH" "$USER" ||
   echo "chsh failed (likely AD/SSSD-managed user) — .bashrc will exec zsh on interactive sessions instead."
 
 echo "Installing additional CLI tools from Arch setup..."
@@ -140,6 +145,7 @@ mkdir -p ~/.config
 cp -R .config/* ~/.config/.
 cp .bashrc ~/
 cp .zshrc ~/
+cp .zprofile ~/
 
 echo "Installing nvm and node lts..."
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
@@ -148,20 +154,26 @@ export NVM_DIR="$HOME/.nvm"
 nvm install --lts
 
 echo "Installing rustup and stable toolchain..."
-if ! command -v rustup >/dev/null 2>&1; then
-  install_brew_packages rustup
+if ! command -v rustup >/dev/null 2>&1 && [ ! -f "$HOME/.cargo/env" ]; then
+  curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
 fi
 source "$HOME/.cargo/env"
 rustup default stable
-rustup install stable
 
 echo "Installing cargo tools..."
 cargo install cargo-audit cargo-llvm-cov
 
 echo "Installing docker..."
-install_brew_packages docker
-sudo systemctl start docker.service
-sudo systemctl enable docker.service
+if ! command -v docker >/dev/null 2>&1; then
+  sudo install -m 0755 -d /etc/apt/keyrings
+  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+  sudo chmod a+r /etc/apt/keyrings/docker.asc
+  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |
+    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+  sudo apt update
+  sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+fi
+sudo systemctl enable --now docker.service
 sudo usermod -aG docker "$USER"
 
 echo "Installing GNOME desktop bits (user-theme extension)..."
@@ -174,38 +186,6 @@ bash "$(dirname "${BASH_SOURCE[0]}")/.config/gnome/ulauncher-install.sh" ||
 echo "Installing Pop Shell (dwindle tiling)..."
 bash "$(dirname "${BASH_SOURCE[0]}")/.config/gnome/pop-shell-install.sh" ||
   echo "Pop Shell install failed (non-fatal, continuing)"
-
-echo "Installing OpenRazer (PPA + driver + daemon + python bindings)..."
-if ! dpkg -l openrazer-meta 2>/dev/null | grep -q '^ii'; then
-  sudo apt install -y software-properties-common
-  sudo add-apt-repository -y ppa:openrazer/stable
-  sudo apt update
-  sudo apt install -y "linux-headers-$(uname -r)" openrazer-meta || \
-    sudo apt install -y linux-headers-generic openrazer-meta
-fi
-sudo gpasswd -a "$USER" plugdev || true
-
-echo "Cloning RazerBatteryTray and building its venv..."
-RBT_DIR="$HOME/perso/RazerBatteryTray"
-mkdir -p "$HOME/perso"
-if [ ! -d "$RBT_DIR" ]; then
-  git clone https://github.com/HoroTW/RazerBatteryTray "$RBT_DIR"
-fi
-if [ ! -x "$RBT_DIR/.venv/bin/razer-battery-tray" ]; then
-  python3 -m venv --system-site-packages "$RBT_DIR/.venv"
-  "$RBT_DIR/.venv/bin/pip" install --upgrade pip
-  "$RBT_DIR/.venv/bin/pip" install -e "$RBT_DIR"
-fi
-
-echo "Installing razer-battery-tray-wait helper to ~/.local/bin..."
-mkdir -p "$HOME/.local/bin"
-install -m 0755 "$(dirname "${BASH_SOURCE[0]}")/.local/bin/razer-battery-tray-wait" \
-  "$HOME/.local/bin/razer-battery-tray-wait"
-
-echo "Enabling Razer battery tray user service..."
-systemctl --user daemon-reload || true
-systemctl --user enable --now razer-battery-tray.service ||
-  echo "Failed to enable razer-battery-tray.service (non-fatal — may need a reboot for openrazer DKMS + plugdev group to apply)"
 
 echo "Applying GNOME keybinds..."
 if command -v gsettings >/dev/null 2>&1; then
