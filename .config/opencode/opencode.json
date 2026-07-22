@@ -1,6 +1,5 @@
 {
   "plugin": [
-    "oh-my-opencode@latest",
     "@franlol/opencode-md-table-formatter@latest",
     "@tarquinen/opencode-dcp@latest"
   ],
