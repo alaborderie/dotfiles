@@ -1,6 +1,5 @@
 {
   "plugin": [
-    "oh-my-openagent@latest",
     "@franlol/opencode-md-table-formatter@latest"
   ],
   "$schema": "https://opencode.ai/config.json",
