@@ -235,8 +235,6 @@ else
 fi
 
 echo "Installing additional software"
-brew install thefuck
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/mkasberg/ghostty-ubuntu/HEAD/install.sh)"
 curl -fsSL https://claude.ai/install.sh | bash
 
 echo ""
