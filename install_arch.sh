@@ -52,9 +52,6 @@ sudo chsh -s "$(which zsh)" "$USER" || \
 echo "Installing starship..."
 curl -sS https://starship.rs/install.sh | sh
 
-echo "Installing thefuck..."
-yay -Sy --needed thefuck
-
 # Terminal & browser
 echo "Installing ghostty and zen browser..."
 yay -Sy --needed ghostty zen-browser-bin

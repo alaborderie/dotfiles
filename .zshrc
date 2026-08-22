@@ -1,9 +1,17 @@
+export PATH="$HOME/.local/bin:$PATH"
 # ── homebrew ─────────────────────────────────────────────────────────────────
 # Puts /home/linuxbrew/.linuxbrew/bin in PATH (so zsh, brew, etc. are found).
 if [ -x /home/linuxbrew/.linuxbrew/bin/brew ]; then
   eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 elif [ -x /opt/homebrew/bin/brew ]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# ── rust ─────────────────────────────────────────────────────────────────────
+# Homebrew's rustup keeps the cargo/rustc proxies in its own opt dir, not in
+# the main brew bin, so add it to PATH explicitly.
+if command -v brew >/dev/null 2>&1 && [ -d "$(brew --prefix rustup 2>/dev/null)/bin" ]; then
+  export PATH="$(brew --prefix rustup)/bin:$PATH"
 fi
 
 # ── oh-my-zsh ────────────────────────────────────────────────────────────────
@@ -39,9 +47,6 @@ export VISUAL=nvim
 
 # ── starship ─────────────────────────────────────────────────────────────────
 eval "$(starship init zsh)"
-
-# ── thefuck ──────────────────────────────────────────────────────────────────
-eval "$(thefuck --alias)"
 
 # ── forgit ───────────────────────────────────────────────────────────────────
 [ -f "$HOME/.config/forgit/forgit.plugin.zsh" ] && source "$HOME/.config/forgit/forgit.plugin.zsh"

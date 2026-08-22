@@ -134,10 +134,10 @@ install_brew_packages \
   smartmontools
 
 echo "Cloning personal nvim config..."
-if [ ! -d "$HOME/.config/nvim" ]; then
-  git clone https://github.com/alaborderie/nvim ~/.config/nvim
+if [ -d "$HOME/.config/nvim/.git" ]; then
+  git -C "$HOME/.config/nvim" pull --quiet
 else
-  echo "nvim config already exists, skipping"
+  git clone https://github.com/alaborderie/nvim ~/.config/nvim
 fi
 
 echo "Copying dotfiles..."
@@ -153,28 +153,65 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
 nvm install --lts
 
+echo "Installing opencode..."
+npm install -g opencode-ai
+
 echo "Installing rustup and stable toolchain..."
 if ! command -v rustup >/dev/null 2>&1 && [ ! -f "$HOME/.cargo/env" ]; then
   curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain stable
 fi
-source "$HOME/.cargo/env"
+rustup install stable
 rustup default stable
+# Homebrew's rustup keeps the cargo/rustc proxies in its own opt dir and does not
+# create ~/.cargo/env, so put that proxy dir on PATH for the cargo install below.
+if [ -f "$HOME/.cargo/env" ]; then
+  source "$HOME/.cargo/env"
+fi
+if ! command -v cargo >/dev/null 2>&1; then
+  RUSTUP_BIN="$(brew_cmd --prefix rustup 2>/dev/null)/bin"
+  [ -d "$RUSTUP_BIN" ] && export PATH="$RUSTUP_BIN:$PATH"
+fi
 
 echo "Installing cargo tools..."
 cargo install cargo-audit cargo-llvm-cov
 
-echo "Installing docker..."
-if ! command -v docker >/dev/null 2>&1; then
+echo "Installing docker engine..."
+# Homebrew's docker formula is only the CLI client; the daemon (docker.service)
+# comes from Docker's official apt repo.
+if ! dpkg -l docker-ce 2>/dev/null | grep -q '^ii'; then
+  sudo apt update
+  sudo apt install -y ca-certificates curl
   sudo install -m 0755 -d /etc/apt/keyrings
-  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
-  sudo chmod a+r /etc/apt/keyrings/docker.asc
-  echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "${UBUNTU_CODENAME:-$VERSION_CODENAME}") stable" |
+  if [ ! -f /etc/apt/keyrings/docker.asc ]; then
+    sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
+  fi
+  echo \
+    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
     sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
   sudo apt update
   sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 fi
 sudo systemctl enable --now docker.service
 sudo usermod -aG docker "$USER"
+
+echo "Installing ghostty (community .deb from mkasberg/ghostty-ubuntu)..."
+# ghostty has no apt repo or Linux brew formula, so pull the prebuilt .deb that
+# matches this Ubuntu version + arch from the community release page.
+if ! command -v ghostty >/dev/null 2>&1; then
+  GHOSTTY_DEB_URL="$(curl -fsSL https://api.github.com/repos/mkasberg/ghostty-ubuntu/releases/latest |
+    grep browser_download_url | cut -d '"' -f 4 |
+    grep "_$(dpkg --print-architecture)_$(. /etc/os-release && echo "$VERSION_ID").deb" | head -n1)"
+  if [ -n "$GHOSTTY_DEB_URL" ]; then
+    GHOSTTY_DEB="$(mktemp --suffix=.deb)"
+    curl -fsSL "$GHOSTTY_DEB_URL" -o "$GHOSTTY_DEB" &&
+      sudo apt install -y "$GHOSTTY_DEB" ||
+      echo "ghostty install failed (non-fatal, continuing)"
+    rm -f "$GHOSTTY_DEB"
+  else
+    echo "No matching ghostty .deb for this Ubuntu version/arch, skipping (non-fatal)"
+  fi
+fi
 
 echo "Installing GNOME desktop bits (user-theme extension)..."
 sudo apt install -y gnome-shell-extensions
@@ -206,4 +243,3 @@ echo ""
 echo "=== Ubuntu/Debian setup complete ==="
 echo "NOTE: Log out and back in for docker group changes to take effect."
 echo "NOTE: Homebrew shell env can be loaded with: eval \"$($BREW_BIN shellenv)\""
-echo "NOTE: Install opencode via npm: npm install -g opencode-ai"

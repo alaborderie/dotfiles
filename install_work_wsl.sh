@@ -9,7 +9,6 @@ apt install -y \
   unzip bc nano dos2unix lsof \
   gettext binutils \
   ripgrep fd-find fzf \
-  thefuck \
   btop ncdu neofetch \
   poppler-utils libxml2-utils \
   locales \
