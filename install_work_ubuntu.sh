@@ -98,7 +98,6 @@ cp .config_work/claude/settings.json ~/.claude/settings.json
 cp .config_work/claude/CLAUDE.md ~/.claude/CLAUDE.md
 cp .config_work/claude/RTK.md ~/.claude/RTK.md
 cp .config_work/opencode/opencode.json ~/.config/opencode/opencode.json
-cp .config_work/opencode/dcp.jsonc ~/.config/opencode/dcp.jsonc
 cp .config_work/opencode/plugins/rtk.ts ~/.config/opencode/plugins/rtk.ts
 cat > ~/.config/opencode/.gitignore <<'EOF'
 node_modules
