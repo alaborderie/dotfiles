@@ -1,12 +1,28 @@
 {
   "plugin": [
     "@franlol/opencode-md-table-formatter@latest",
-    "@tarquinen/opencode-dcp@latest"
+    "@tarquinen/opencode-dcp@latest",
+    "superpowers@git+https://github.com/obra/superpowers.git#v6.4.1"
   ],
   "$schema": "https://opencode.ai/config.json",
+  "model": "opencode-go/deepseek-v4.1-flash",
   "agent": {
     "compaction": {
-      "model": "github-copilot/claude-haiku-4.5"
+      "model": "opencode-go/deepseek-v4.1-flash"
+    }
+  },
+  "permission": "allow",
+  "mcp": {
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    },
+    "gh_grep": {
+      "type": "remote",
+      "url": "https://mcp.grep.app"
     }
   }
 }
